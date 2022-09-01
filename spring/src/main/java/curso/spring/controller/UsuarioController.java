@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import curso.spring.model.Usuario;
 import curso.spring.repository.UsuarioRepository;
@@ -20,13 +21,25 @@ public class UsuarioController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/salvarusuario")
-	public String salvar(Usuario usuario){
+	public ModelAndView salvar(Usuario usuario){
 		
 		usuarioRepository.save(usuario);
 		
-		return "cadastro/cadastrousuario";
+		return listarUsuarios();
 	}
 	
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/listarusuarios")
+	public ModelAndView listarUsuarios(){
+		
+		ModelAndView mv = new ModelAndView("cadastro/cadastrousuario");
+		
+		Iterable<Usuario> u = usuarioRepository.findAll();
+		
+		mv.addObject("listaUsuario", u);
+		
+		return mv;
+	}
 	
 	
 }

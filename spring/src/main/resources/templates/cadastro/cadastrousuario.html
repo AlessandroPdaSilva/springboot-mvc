@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"	>
 <head>
 <meta charset="ISO-8859-1">
 <title>Cadastro de usuarios</title>
@@ -19,5 +20,18 @@
 		<input type="submit" value="Salvar">
 		
 	</form>
+	
+	
+	<table th:each = " u : ${listaUsuario}">
+		
+		<tr>
+			<td th:text = "${u.id}">id</td>
+			<td th:text = "${u.nome}">Nome</td>
+			<td th:text = "${u.idade}">Idade</td>
+		</tr>
+	
+	</table>
+	
+	
 </body>
 </html>
