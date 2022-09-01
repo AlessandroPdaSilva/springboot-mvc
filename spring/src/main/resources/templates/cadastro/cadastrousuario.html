@@ -20,13 +20,16 @@
 
 	<h1>Cadastro de usuarios</h1>
 	
-	<form action="salvarusuario" method="POST">
+	<form action="salvarusuario" method="POST" th:object="${usuarioeditar}">
+		 
+		<label>ID</label>
+		<input name="id" th:field="*{id}">
 		 
 		<label>Nome</label>
-		<input name="nome" >
+		<input name="nome" th:field="*{nome}">
 		
 		<label>Idade</label>
-		<input name="idade"> 
+		<input name="idade" th:field="*{idade}"> 
 		
 		<input type="submit" value="Salvar" class="btn btn-primary">
 		
@@ -41,6 +44,7 @@
 			<td th:text = "${u.id}"></td>
 			<td th:text = "${u.nome}"></td>
 			<td th:text = "${u.idade}"></td>
+			<td><a th:href="@{/editarusuario/{idusuario}(idusuario=${u.id})}">Editar</a></td>
 		</tr>
 	
 	</table>
