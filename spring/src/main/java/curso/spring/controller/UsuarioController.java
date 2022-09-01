@@ -77,4 +77,24 @@ public class UsuarioController {
 		return mv;
 	}
 	
+	// DELETAR
+	@GetMapping(value = "/excluirusuario/{idusuario}")
+	public ModelAndView excluirUsuario(@PathVariable(value = "idusuario") Long idUsuario){
+		
+		ModelAndView mv = new ModelAndView("cadastro/cadastrousuario");
+		
+		usuarioRepository.deleteById(idUsuario);
+		
+		// listar usuarios
+		Iterable<Usuario> listaUsuario = usuarioRepository.findAll();
+		mv.addObject("listaUsuario", listaUsuario);
+		
+		// usuario edicao
+		mv.addObject("usuarioeditar", new Usuario());
+		
+		return mv;
+	}
+	
+	
+	
 }

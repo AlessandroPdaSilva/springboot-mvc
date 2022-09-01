@@ -45,6 +45,7 @@
 			<td th:text = "${u.nome}"></td>
 			<td th:text = "${u.idade}"></td>
 			<td><a th:href="@{/editarusuario/{idusuario}(idusuario=${u.id})}">Editar</a></td>
+			<td><a th:href="@{/excluirusuario/{idusuario}(idusuario=${u.id})}">Excluir</a></td>
 		</tr>
 	
 	</table>
