@@ -20,10 +20,10 @@
 
 	<h1>Cadastro de usuarios</h1>
 	
-	<form action="salvarusuario" method="POST" th:object="${usuarioeditar}">
+	<form action="/salvarusuario" method="POST" th:object="${usuarioeditar}">
 		 
 		<label>ID</label>
-		<input name="id" th:field="*{id}">
+		<input name="id" th:field="*{id}" readonly="readonly">
 		 
 		<label>Nome</label>
 		<input name="nome" th:field="*{nome}">
@@ -35,7 +35,7 @@
 		
 	</form>
 	
-	<a href="listarusuarios" class="btn btn-primary">Listar Usuarios</a>
+	<a href="/listarusuarios" class="btn btn-primary">Listar Usuarios</a>
 	
 	
 	<table th:each = " u : ${listaUsuario}" >

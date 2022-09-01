@@ -19,15 +19,18 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+	// INICIO
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastrousuario")
 	public ModelAndView inicio(){
 		
+		// listar usuarios
 		ModelAndView mv = new ModelAndView("cadastro/cadastrousuario");
 		mv.addObject("usuarioeditar", new Usuario());
 		
 		return mv;
 	}
 	
+	// SALVAR
 	@RequestMapping(method = RequestMethod.POST, value = "/salvarusuario")
 	public ModelAndView salvar(Usuario usuario){
 		
@@ -37,31 +40,41 @@ public class UsuarioController {
 	}
 	
 	
+	// LISTAR USUARIOS
 	@RequestMapping(method = RequestMethod.GET, value = "/listarusuarios")
 	public ModelAndView listarUsuarios(){
 		
 		ModelAndView mv = new ModelAndView("cadastro/cadastrousuario");
 		
+		// listar usuarios
 		Iterable<Usuario> u = usuarioRepository.findAll();
-		
 		mv.addObject("listaUsuario", u);
+		
+		// usuario edicao
 		mv.addObject("usuarioeditar", new Usuario());
 		
 		return mv;
 	}
 	
 	
+	// EDITAR
 	@GetMapping(value = "/editarusuario/{idusuario}")
 	public ModelAndView editarUsuario(@PathVariable(value = "idusuario") Long idUsuario){
 		
 		ModelAndView mv = new ModelAndView("cadastro/cadastrousuario");
 		
+		// usuario edicao
 		Optional<Usuario> aux = usuarioRepository.findById(idUsuario);
 		Usuario u = aux.get();
-		
 		mv.addObject("usuarioeditar", u); 
 		
-		return listarUsuarios();
+		// listar usuarios
+		Iterable<Usuario> listaUsuario = usuarioRepository.findAll();
+		mv.addObject("listaUsuario", listaUsuario);
+		
+		
+		
+		return mv;
 	}
 	
 }
