@@ -1,13 +1,16 @@
 package curso.spring.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import curso.spring.model.Usuario;
@@ -23,8 +26,14 @@ public class UsuarioController {
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastrousuario")
 	public ModelAndView inicio(){
 		
-		// listar usuarios
+		
 		ModelAndView mv = new ModelAndView("cadastro/cadastrousuario");
+		
+		// listar usuarios
+		Iterable<Usuario> listaUsuario = usuarioRepository.findAll();
+		mv.addObject("listaUsuario", listaUsuario);
+		
+		// usuario edicao
 		mv.addObject("usuarioeditar", new Usuario());
 		
 		return mv;
@@ -95,6 +104,22 @@ public class UsuarioController {
 		return mv;
 	}
 	
+	
+	// PESQUISAR USUARIO POR NOME
+	@PostMapping( value = "/pesquisarusuario")
+	public ModelAndView pesquisarUsuarioByName(@RequestParam(value = "campoPesquisar") String campoPesquisar){
+		
+		ModelAndView mv = new ModelAndView("cadastro/cadastrousuario");
+		
+		// listar usuarios pesquisados
+		List<Usuario> listaUsuario = usuarioRepository.pesquisarByNome(campoPesquisar);
+		mv.addObject("listaUsuario", listaUsuario);
+		
+		// usuario edicao
+		mv.addObject("usuarioeditar", new Usuario());
+		
+		return mv;
+	}
 	
 	
 }
