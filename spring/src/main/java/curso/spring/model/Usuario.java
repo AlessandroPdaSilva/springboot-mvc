@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,6 +34,13 @@ public class Usuario implements Serializable{
 	List<Telefone> listaTelefone;
 	
 	
+	private String login;
+	private String senha;
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<Role> roles;
+	
+	
 	// GET E SET
 	public Long getId() {
 		return id;
@@ -57,6 +65,24 @@ public class Usuario implements Serializable{
 	}
 	public void setListaTelefone(List<Telefone> listaTelefone) {
 		this.listaTelefone = listaTelefone;
+	}
+	public String getLogin() {
+		return login;
+	}
+	public void setLogin(String login) {
+		this.login = login;
+	}
+	public String getSenha() {
+		return senha;
+	}
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	public List<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 	@Override
 	public String toString() {
