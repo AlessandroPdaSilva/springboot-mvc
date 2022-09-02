@@ -1,10 +1,15 @@
 package curso.spring.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,11 +50,40 @@ public class UsuarioController {
 	
 	// SALVAR
 	@RequestMapping(method = RequestMethod.POST, value = "/salvarusuario")
-	public ModelAndView salvar(Usuario usuario){
+	public ModelAndView salvar(@Valid Usuario usuario, BindingResult bindingResult){
 		
-		usuarioRepository.save(usuario);
+		if(bindingResult.hasErrors()) {
+			
+			// Mensagens de erro
+			List<String> msg = new ArrayList<String>();
+			
+			// adicionando no array
+			for(ObjectError objectError : bindingResult.getAllErrors()) {
+				msg.add(objectError.getDefaultMessage());
+			}
+			
+			
+				ModelAndView mv = new ModelAndView("cadastro/cadastrousuario");
+				
+				// mensagem de erro
+				mv.addObject("msg",msg);
+				
+				// listar usuarios
+				mv.addObject("listaUsuario", usuarioRepository.findAll());
+				
+				// usuario edicao
+				mv.addObject("usuarioeditar", usuario);
+				
+				return mv;
+			
+		}else {
+			usuarioRepository.save(usuario);
+			return listarUsuarios();
+		}
 		
-		return listarUsuarios();
+		
+		
+		
 	}
 	
 	

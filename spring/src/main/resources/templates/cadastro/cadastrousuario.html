@@ -20,6 +20,12 @@
 
 	<h1>Cadastro de usuarios</h1>
 	
+	<br>
+		<div th:each = "m : ${msg}">
+			<span th:text = "${m}"></span>
+		</div>
+	<br>
+	
 	<!-- Formulario Usuario -->
 	<form action="/salvarusuario" method="POST" th:object="${usuarioeditar}" id="formusuario">
 		 
