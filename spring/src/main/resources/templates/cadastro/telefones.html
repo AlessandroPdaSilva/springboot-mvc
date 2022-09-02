@@ -20,6 +20,12 @@
 
 	<h1>Cadastro de Telefones</h1>
 	
+	<br>
+		<div th:each = "m : ${msg}">
+			<span th:text = "${m}"></span>
+		</div>
+	<br>
+	
 	<!-- Infomações do usuario -->
 	<div th:each = " u : ${usuarioeditar}">
 		

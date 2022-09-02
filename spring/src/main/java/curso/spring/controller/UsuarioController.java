@@ -171,10 +171,34 @@ public class UsuarioController {
 	// SALVAR TELEFONE
 	@PostMapping(value = "/addfonepessoa/{idusuario}")
 	public ModelAndView addFonePessoa(Telefone telefone, @PathVariable("idusuario") Long idUsuario){
+		
+		Usuario u = usuarioRepository.findById(idUsuario).get();
+		
+		// Se vazio
+		if(telefone != null && telefone.getNumero().isEmpty()) {
+			
+			ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+			modelAndView.addObject("usuarioeditar", u);
+			modelAndView.addObject("listaTelefone", telefoneRepository.pesquisarTelefoneByidUsuario(idUsuario));
+			
+			
+			// msg vazio
+			List<String> msg = new ArrayList<String>();
+			if (telefone.getNumero().isEmpty()) {
+				msg.add("Numero deve ser informado");
+			}
+			 
+			modelAndView.addObject("msg", msg);
+			
+			return modelAndView;
+			
+		}
+		
+		
+		
 		ModelAndView mv = new ModelAndView("cadastro/telefones");
 		
 		// salvando telefone
-		Usuario u = usuarioRepository.findById(idUsuario).get();
 		telefone.setUsuario(u);
 		telefoneRepository.save(telefone);
 		
