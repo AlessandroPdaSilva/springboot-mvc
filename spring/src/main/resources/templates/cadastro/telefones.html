@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"	>
+<head>
+<meta charset="UTF-8">
+<title>Cadastro de Telefones</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+	<style type="text/css">
+	
+	html {
+	    margin-left: 5%;
+	    margin-right: 5%;
+	    margin-top: 5%;
+	}
+</style>
+
+</head>
+<body>
+
+	<h1>Cadastro de Telefones</h1>
+	
+	<!-- Infomações do usuario -->
+	<div th:each = " u : ${usuarioeditar}">
+		
+		<p> ID: <span th:text = "${u.id}"></span></p>
+		<p> Nome: <span th:text = "${u.nome}"></span></p>
+		<p> idade: <span th:text = "${u.idade}"></span></p>
+	
+	</div>
+	
+	<a href="/cadastrousuario"> cadastro usuario</a>
+	
+	<!-- Formulario Telefone -->
+	<form th:action="@{/addfonepessoa/{idusuario}(idusuario=${usuarioeditar.id})}" method="POST" id="formtelefone">
+	
+		 
+		<label>Numero</label>
+		<input name="numero" >
+		
+		
+		<button type="submit" class="btn btn-success">Salvar</button>
+		<button onclick="limparForm()" type="button" class="btn btn-light" >Novo</button>
+	
+	</form>
+	
+	<!-- Tabela Telefone -->
+	<table class="table table-dark table-striped">
+	
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Numero</th>
+				<th>Excluir</th>
+			</tr>
+		</thead>
+			
+		<tr th:each = " tel : ${listaTelefone}">
+			<td th:text = "${tel.id}"></td>
+			<td th:text = "${tel.numero}"></td>
+			<td><a th:href="@{/excluirtelefone/{idtelefone}(idtelefone=${tel.id})}" class="btn btn-danger">Excluir</a></td>
+		</tr>
+	
+	</table>
+	
+	
+	
+	
+	
+	<!-- JQuery-->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+ 	<!-- Javascript Bootstrap -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+  
+  	<script type="text/javascript">
+  	
+	  	function limparForm() {
+	  		var elementos = document.getElementById('formtelefone').elements;
+	  		for (p = 0; p < elementos.length; p ++) {
+	  			elementos[p].value = '';
+	  		}
+	  	}
+  	
+  	
+  	</script>
+  
+</body>
+</html>

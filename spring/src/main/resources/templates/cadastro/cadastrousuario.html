@@ -75,7 +75,7 @@
 			
 		<tr th:each = " u : ${listaUsuario}">
 			<td th:text = "${u.id}"></td>
-			<td th:text = "${u.nome}"></td>
+			<td ><a th:href="@{/telefones/{idusuario}(idusuario=${u.id})}"><span th:text = "${u.nome}"></span></a></td>
 			<td th:text = "${u.idade}"></td>
 			<td><a th:href="@{/editarusuario/{idusuario}(idusuario=${u.id})}" class="btn btn-primary">Editar</a></td>
 			<td><a th:href="@{/excluirusuario/{idusuario}(idusuario=${u.id})}" class="btn btn-danger">Excluir</a></td>

@@ -1,11 +1,14 @@
 package curso.spring.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Usuario implements Serializable{
@@ -19,6 +22,8 @@ public class Usuario implements Serializable{
 	private String nome;
 	private int idade;
 	
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "usuario")
+	List<Telefone> listaTelefone;
 	
 	
 	// GET E SET
@@ -40,11 +45,17 @@ public class Usuario implements Serializable{
 	public void setIdade(int idade) {
 		this.idade = idade;
 	}
-	
+	public List<Telefone> getListaTelefone() {
+		return listaTelefone;
+	}
+	public void setListaTelefone(List<Telefone> listaTelefone) {
+		this.listaTelefone = listaTelefone;
+	}
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", nome=" + nome + ", idade=" + idade + "]";
+		return "Usuario [id=" + id + ", nome=" + nome + ", idade=" + idade + ", listaTelefone=" + listaTelefone + "]";
 	}
+	
 	
 	
 	
