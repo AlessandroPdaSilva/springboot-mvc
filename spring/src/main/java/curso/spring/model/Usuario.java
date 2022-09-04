@@ -53,6 +53,10 @@ public class Usuario implements UserDetails {
 										table = "role"))// "JoinTable cria tabela no banco"
 	private List<Role> roles;
 	
+	private String cep;
+	private String bairro;
+	private String cidade;
+	
 	
 	// GET E SET
 	public Long getId() {
@@ -96,6 +100,24 @@ public class Usuario implements UserDetails {
 	}
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+	public String getCep() {
+		return cep;
+	}
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+	public String getBairro() {
+		return bairro;
+	}
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+	public String getCidade() {
+		return cidade;
+	}
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
 	}
 	@Override
 	public String toString() {
