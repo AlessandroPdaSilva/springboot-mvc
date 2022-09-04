@@ -39,6 +39,13 @@
 		<label>Idade</label>
 		<input name="idade" th:field="*{idade}"> 
 		
+		<label>Sexo</label>
+		<select name="sexo" th:field="*{sexo}" >
+		  <option value="Nao selecionado" selected="selected" disabled="disabled">--[Selecione]--</option>
+		  <option value="MASCULINO">Masculino</option>
+		  <option value="FEMININO">Feminino</option>
+		</select>
+		
 		<br>
 		<label>CEP</label>
 		<input name="cep" id="cep" th:field="*{cep}"> 

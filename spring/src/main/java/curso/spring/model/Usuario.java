@@ -57,6 +57,8 @@ public class Usuario implements UserDetails {
 	private String bairro;
 	private String cidade;
 	
+	private String sexo;
+	
 	
 	// GET E SET
 	public Long getId() {
@@ -118,6 +120,12 @@ public class Usuario implements UserDetails {
 	}
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
+	}
+	public String getSexo() {
+		return sexo;
+	}
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
 	}
 	@Override
 	public String toString() {
