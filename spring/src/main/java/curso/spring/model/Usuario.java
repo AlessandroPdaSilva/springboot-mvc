@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
@@ -58,6 +59,9 @@ public class Usuario implements UserDetails {
 	private String cidade;
 	
 	private String sexo;
+	
+	@ManyToOne
+	private Profissao profissao;
 	
 	
 	// GET E SET
@@ -126,6 +130,13 @@ public class Usuario implements UserDetails {
 	}
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
+	}
+	
+	public Profissao getProfissao() {
+		return profissao;
+	}
+	public void setProfissao(Profissao profissao) {
+		this.profissao = profissao;
 	}
 	@Override
 	public String toString() {

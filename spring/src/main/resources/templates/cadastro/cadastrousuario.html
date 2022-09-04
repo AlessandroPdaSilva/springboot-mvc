@@ -46,6 +46,11 @@
 		  <option value="FEMININO">Feminino</option>
 		</select>
 		
+		<label>Profissao</label>
+		<select name="profissao" th:field="*{profissao}" >
+		 	<option th:each="prof : ${listaProfissao}" th:text = "${prof.nome}" th:value="${prof.id}">
+		</select>
+		
 		<br>
 		<label>CEP</label>
 		<input name="cep" id="cep" th:field="*{cep}"> 

@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import curso.spring.model.Telefone;
 import curso.spring.model.Usuario;
+import curso.spring.repository.ProfissaoRepository;
 import curso.spring.repository.TelefoneRepository;
 import curso.spring.repository.UsuarioRepository;
 
@@ -31,6 +32,9 @@ public class UsuarioController {
 	
 	@Autowired
 	private TelefoneRepository telefoneRepository;
+	
+	@Autowired
+	private ProfissaoRepository profissaoRepository;
 	
 	// INICIO
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastrousuario")
@@ -44,6 +48,9 @@ public class UsuarioController {
 		
 		// usuario edicao
 		mv.addObject("usuarioeditar", new Usuario());
+		
+		// lista profissao
+		mv.addObject("listaProfissao", profissaoRepository.findAll());
 		
 		return mv;
 	}
@@ -71,8 +78,13 @@ public class UsuarioController {
 				// listar usuarios
 				mv.addObject("listaUsuario", usuarioRepository.findAll());
 				
+				// lista profissao
+				mv.addObject("listaProfissao", profissaoRepository.findAll());
+				
 				// usuario edicao
 				mv.addObject("usuarioeditar", usuario);
+				
+				
 				
 				return mv;
 			
@@ -96,6 +108,9 @@ public class UsuarioController {
 		// listar usuarios
 		mv.addObject("listaUsuario", usuarioRepository.findAll());
 		
+		// lista profissao
+		mv.addObject("listaProfissao", profissaoRepository.findAll());
+		
 		// usuario edicao
 		mv.addObject("usuarioeditar", new Usuario());
 		
@@ -115,6 +130,9 @@ public class UsuarioController {
 		// listar usuarios
 		mv.addObject("listaUsuario", usuarioRepository.findAll());
 		
+		// lista profissao
+		mv.addObject("listaProfissao", profissaoRepository.findAll());
+		
 		
 		
 		return mv;
@@ -131,6 +149,9 @@ public class UsuarioController {
 		// listar usuarios
 		mv.addObject("listaUsuario", usuarioRepository.findAll());
 		
+		// lista profissao
+		mv.addObject("listaProfissao", profissaoRepository.findAll());
+		
 		// usuario edicao
 		mv.addObject("usuarioeditar", new Usuario());
 		
@@ -146,6 +167,9 @@ public class UsuarioController {
 		
 		// listar usuarios pesquisados
 		mv.addObject("listaUsuario", usuarioRepository.pesquisarByNome(campoPesquisar));
+		
+		// lista profissao
+		mv.addObject("listaProfissao", profissaoRepository.findAll());
 		
 		// usuario edicao
 		mv.addObject("usuarioeditar", new Usuario());
