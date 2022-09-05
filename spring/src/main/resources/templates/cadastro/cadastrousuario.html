@@ -46,6 +46,9 @@
 		  <option value="FEMININO">Feminino</option>
 		</select>
 		
+		
+		<br><br>
+		
 		<label>Profissao</label>
 		<select name="profissao" th:field="*{profissao}" >
 		 	<option th:each="prof : ${listaProfissao}" th:text = "${prof.nome}" th:value="${prof.id}">
@@ -56,7 +59,12 @@
 		 	<option th:each="c : ${T(curso.spring.model.Cargo).values()}" th:text = "${c}" th:value="${c}">
 		</select>
 		
-		<br>
+		<label>Data de Nascimento</label>
+		<input name="dataNascimento" th:field="*{dataNascimento}" type="date">
+		
+		<br><br>
+		
+		
 		<label>CEP</label>
 		<input name="cep" id="cep" th:field="*{cep}"> 
 		
