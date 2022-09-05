@@ -28,7 +28,7 @@
 	<br>
 	
 	<!-- Formulario Usuario -->
-	<form action="/salvarusuario" method="POST" th:object="${usuarioeditar}" id="formusuario" >
+	<form action="/salvarusuario" method="POST" th:object="${usuarioeditar}" id="formusuario" enctype="multipart/form-data" >
 		 
 		<label>ID</label>
 		<input name="id" th:field="*{id}" readonly="readonly">
@@ -61,6 +61,11 @@
 		
 		<label>Data de Nascimento</label>
 		<input name="dataNascimento" th:field="*{dataNascimento}" type="date">
+		
+		<br><br>
+		
+		<label>Foto de perfil</label>
+		<input name="file" id="file" type="file" >
 		
 		<br><br>
 		

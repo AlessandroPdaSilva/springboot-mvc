@@ -1,5 +1,6 @@
 package curso.spring.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import curso.spring.model.Telefone;
@@ -56,8 +58,8 @@ public class UsuarioController {
 	}
 	
 	// SALVAR
-	@RequestMapping(method = RequestMethod.POST, value = "/salvarusuario")
-	public ModelAndView salvar(@Valid Usuario usuario, BindingResult bindingResult){
+	@RequestMapping(method = RequestMethod.POST, value = "/salvarusuario", consumes = {"multipart/form-data"})
+	public ModelAndView salvar(@Valid Usuario usuario, BindingResult bindingResult, final MultipartFile file) throws IOException{
 		
 		if(bindingResult.hasErrors()) {
 			
@@ -89,6 +91,14 @@ public class UsuarioController {
 				return mv;
 			
 		}else {
+			
+			// verificar file adicionado
+			if(file.getSize() > 0) {
+				usuario.setFoto(file.getBytes());
+			}else {
+				usuario.setFoto(usuarioRepository.findById(usuario.getId()).get().getFoto());
+			}
+			
 			usuarioRepository.save(usuario);
 			return listarUsuarios();
 		}
