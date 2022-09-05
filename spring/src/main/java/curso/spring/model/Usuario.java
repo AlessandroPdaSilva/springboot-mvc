@@ -79,6 +79,8 @@ public class Usuario implements UserDetails {
 	
 	@Lob
 	private byte[] foto;
+	private String fotoNomeAndExtensao;
+	private String fotoTipo;
 	
 	
 	// GET E SET
@@ -173,6 +175,18 @@ public class Usuario implements UserDetails {
 	}
 	public void setFoto(byte[] foto) {
 		this.foto = foto;
+	}
+	public String getFotoNomeAndExtensao() {
+		return fotoNomeAndExtensao;
+	}
+	public void setFotoNomeAndExtensao(String fotoNomeAndExtensao) {
+		this.fotoNomeAndExtensao = fotoNomeAndExtensao;
+	}
+	public String getFotoTipo() {
+		return fotoTipo;
+	}
+	public void setFotoTipo(String fotoTipo) {
+		this.fotoTipo = fotoTipo;
 	}
 	@Override
 	public String toString() {

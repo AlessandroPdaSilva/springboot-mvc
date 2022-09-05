@@ -114,7 +114,7 @@
 			<tr>
 				<th>ID</th>
 				<th>Nome</th>
-				<th>Idade</th>
+				<th>Foto</th>
 				<th>Editar</th>
 				<th>Excluir</th>
 			</tr>
@@ -122,8 +122,11 @@
 			
 		<tr th:each = " u : ${listaUsuario}">
 			<td th:text = "${u.id}"></td>
-			<td ><a th:href="@{/telefones/{idusuario}(idusuario=${u.id})}"><span th:text = "${u.nome}"></span></a></td>
-			<td th:text = "${u.idade}"></td>
+			<td><a th:href="@{/telefones/{idusuario}(idusuario=${u.id})}"><span th:text = "${u.nome}"></span></a></td>
+			<td>
+				<a th:if="${u.foto != null}" th:href="@{/downloadfoto/{idusuario}(idusuario=${u.id})}"  class="btn btn-primary">Download</a>
+				<p th:if="${u.foto == null}">ND</p>
+			</td>
 			<td><a th:href="@{/editarusuario/{idusuario}(idusuario=${u.id})}" class="btn btn-primary">Editar</a></td>
 			<td><a th:href="@{/excluirusuario/{idusuario}(idusuario=${u.id})}" class="btn btn-danger">Excluir</a></td>
 		</tr>

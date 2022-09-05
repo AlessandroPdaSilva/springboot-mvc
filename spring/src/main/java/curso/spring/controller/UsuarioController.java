@@ -1,10 +1,12 @@
 package curso.spring.controller;
 
 import java.io.IOException;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +63,7 @@ public class UsuarioController {
 	@RequestMapping(method = RequestMethod.POST, value = "/salvarusuario", consumes = {"multipart/form-data"})
 	public ModelAndView salvar(@Valid Usuario usuario, BindingResult bindingResult, final MultipartFile file) throws IOException{
 		
-		if(bindingResult.hasErrors()) {
+		if(bindingResult.hasErrors()) {// erro
 			
 			// Mensagens de erro
 			List<String> msg = new ArrayList<String>();
@@ -95,8 +97,13 @@ public class UsuarioController {
 			// verificar file adicionado
 			if(file.getSize() > 0) {
 				usuario.setFoto(file.getBytes());
+				usuario.setFotoNomeAndExtensao(file.getOriginalFilename());
+				usuario.setFotoTipo(file.getContentType());
+				
 			}else {
 				usuario.setFoto(usuarioRepository.findById(usuario.getId()).get().getFoto());
+				usuario.setFotoNomeAndExtensao(usuarioRepository.findById(usuario.getId()).get().getFotoNomeAndExtensao());
+				usuario.setFotoTipo(usuarioRepository.findById(usuario.getId()).get().getFotoTipo());
 			}
 			
 			usuarioRepository.save(usuario);
@@ -167,6 +174,34 @@ public class UsuarioController {
 		
 		return mv;
 	}
+	
+	// DOWNLOAD FOTO
+	@GetMapping(value = "/downloadfoto/{idusuario}")
+	public void downloadFoto(@PathVariable(value = "idusuario") Long idUsuario, HttpServletResponse response) throws IOException{
+		
+		Usuario u = usuarioRepository.findById(idUsuario).get();
+		
+		if(u.getFoto() != null) {
+			
+			//Tamanho da foto
+			response.setContentLength(u.getFoto().length);
+			
+			//Tipo do arquivo ou pode ser generica application/octet-strea
+			response.setContentType(u.getFotoTipo());
+			
+			//Define o cabeçalho da resposta
+			String headerKey = "Content-Disposition";
+			String headerValue = String.format("attachment; filename=\"%s\"", u.getFotoNomeAndExtensao());
+			response.setHeader(headerKey, headerValue);
+			
+			//Finaliza o Download
+			response.getOutputStream().write(u.getFoto());
+			
+		}
+		
+		
+	}
+	
 	
 	
 	// PESQUISAR USUARIO POR NOME
