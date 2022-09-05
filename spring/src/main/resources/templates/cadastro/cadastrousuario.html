@@ -51,6 +51,11 @@
 		 	<option th:each="prof : ${listaProfissao}" th:text = "${prof.nome}" th:value="${prof.id}">
 		</select>
 		
+		<label>Cargo</label>
+		<select name="cargo" th:field="*{cargo}" >
+		 	<option th:each="c : ${T(curso.spring.model.Cargo).values()}" th:text = "${c}" th:value="${c}">
+		</select>
+		
 		<br>
 		<label>CEP</label>
 		<input name="cep" id="cep" th:field="*{cep}"> 

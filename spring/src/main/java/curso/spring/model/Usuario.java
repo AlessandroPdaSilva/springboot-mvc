@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -42,6 +44,9 @@ public class Usuario implements UserDetails {
 	
 	private String login;
 	private String senha;
+	
+	@Enumerated(EnumType.STRING)
+	private Cargo cargo;
 	
 	@OneToMany(fetch = FetchType.EAGER)	
 	@JoinTable(name = "usuarios_role", // Nome da tabela
@@ -137,6 +142,12 @@ public class Usuario implements UserDetails {
 	}
 	public void setProfissao(Profissao profissao) {
 		this.profissao = profissao;
+	}
+	public Cargo getCargo() {
+		return cargo;
+	}
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
 	}
 	@Override
 	public String toString() {
