@@ -134,6 +134,42 @@
 	</table>
 	
 	
+		<!-- Paginação tabela -->
+		<nav aria-label="Page navigation example" >
+		  <ul class="pagination">
+		  	
+		  	<!-- anterior -->
+		  	<span th:if="${listaUsuario.hasPrevious()}">
+			    <li class="page-item">
+			      <a th:href="@{/usuariopaginacao(page=${listaUsuario.number-1}, size=${listaUsuario.size})}" class="page-link" href="#" aria-label="Previous">
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+			    </li>
+		    </span>
+		    
+		    
+		    <!-- numeros (ex:1,2,3) -->
+		    <th:block th:each=" i : ${#numbers.sequence(0, listaUsuario.totalPages - 1)}">
+			    <li class="page-item"><a th:href="@{/usuariopaginacao(page=${i}, size=${listaUsuario.size})}" class="page-link">[[ ${i} + 1 ]]</a></li>
+			</th:block> 
+		    
+		    
+		    <!-- proximo -->
+		    <span th:if="${listaUsuario.hasNext()}">
+			    <li class="page-item">
+			      <a th:href="@{/usuariopaginacao(page=${listaUsuario.number+1}, size=${listaUsuario.size})}" class="page-link" href="#" aria-label="Next">
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+			    </li>
+		    </span>
+		    
+		    
+		  </ul>
+		</nav>
+	
+	
+	
+	
 	
 	<!-- JQuery-->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

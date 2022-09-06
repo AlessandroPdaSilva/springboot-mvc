@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -48,7 +53,7 @@ public class UsuarioController {
 		ModelAndView mv = new ModelAndView("cadastro/cadastrousuario");
 		
 		// listar usuarios
-		mv.addObject("listaUsuario", usuarioRepository.findAll());
+		mv.addObject("listaUsuario", usuarioRepository.findAll(PageRequest.of(0, 5,Sort.by("nome"))));
 		
 		// usuario edicao
 		mv.addObject("usuarioeditar", new Usuario());
@@ -80,7 +85,7 @@ public class UsuarioController {
 				mv.addObject("msg",msg);
 				
 				// listar usuarios
-				mv.addObject("listaUsuario", usuarioRepository.findAll());
+				mv.addObject("listaUsuario", usuarioRepository.findAll(PageRequest.of(0, 5,Sort.by("nome"))));
 				
 				// lista profissao
 				mv.addObject("listaProfissao", profissaoRepository.findAll());
@@ -101,9 +106,14 @@ public class UsuarioController {
 				usuario.setFotoTipo(file.getContentType());
 				
 			}else {
-				usuario.setFoto(usuarioRepository.findById(usuario.getId()).get().getFoto());
-				usuario.setFotoNomeAndExtensao(usuarioRepository.findById(usuario.getId()).get().getFotoNomeAndExtensao());
-				usuario.setFotoTipo(usuarioRepository.findById(usuario.getId()).get().getFotoTipo());
+				
+				if(usuario.getId() != null) {
+					usuario.setFoto(usuarioRepository.findById(usuario.getId()).get().getFoto());
+					usuario.setFotoNomeAndExtensao(usuarioRepository.findById(usuario.getId()).get().getFotoNomeAndExtensao());
+					usuario.setFotoTipo(usuarioRepository.findById(usuario.getId()).get().getFotoTipo());
+				}
+				
+				
 			}
 			
 			usuarioRepository.save(usuario);
@@ -123,7 +133,7 @@ public class UsuarioController {
 		ModelAndView mv = new ModelAndView("cadastro/cadastrousuario");
 		
 		// listar usuarios
-		mv.addObject("listaUsuario", usuarioRepository.findAll());
+		mv.addObject("listaUsuario", usuarioRepository.findAll(PageRequest.of(0, 5,Sort.by("nome"))));
 		
 		// lista profissao
 		mv.addObject("listaProfissao", profissaoRepository.findAll());
@@ -145,7 +155,7 @@ public class UsuarioController {
 		mv.addObject("usuarioeditar", usuarioRepository.findById(idUsuario).get()); 
 		
 		// listar usuarios
-		mv.addObject("listaUsuario", usuarioRepository.findAll());
+		mv.addObject("listaUsuario", usuarioRepository.findAll(PageRequest.of(0, 5,Sort.by("nome"))));
 		
 		// lista profissao
 		mv.addObject("listaProfissao", profissaoRepository.findAll());
@@ -164,7 +174,7 @@ public class UsuarioController {
 		usuarioRepository.deleteById(idUsuario);
 		
 		// listar usuarios
-		mv.addObject("listaUsuario", usuarioRepository.findAll());
+		mv.addObject("listaUsuario", usuarioRepository.findAll(PageRequest.of(0, 5,Sort.by("nome"))));
 		
 		// lista profissao
 		mv.addObject("listaProfissao", profissaoRepository.findAll());
@@ -174,6 +184,26 @@ public class UsuarioController {
 		
 		return mv;
 	}
+	
+	// PAGINACAO USUARIO
+	@GetMapping(value = "/usuariopaginacao")
+	public ModelAndView listaUsuarioPaginacao(@PageableDefault(size = 5) Pageable pageable){
+		
+		ModelAndView mv = new ModelAndView("cadastro/cadastrousuario");
+		
+		// listar usuarios paginado
+		mv.addObject("listaUsuario", usuarioRepository.findAll(pageable));
+				
+		// lista profissao
+		mv.addObject("listaProfissao", profissaoRepository.findAll());
+		
+		// usuario edicao
+		mv.addObject("usuarioeditar", new Usuario());
+		
+		return mv;
+	}
+	
+	
 	
 	// DOWNLOAD FOTO
 	@GetMapping(value = "/downloadfoto/{idusuario}")
