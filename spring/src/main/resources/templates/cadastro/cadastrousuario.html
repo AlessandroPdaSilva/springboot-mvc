@@ -99,7 +99,7 @@
 		<div class="input-group mb-3">
 		  <input type="submit" value="Pesquisar" class="btn btn btn-secondary">
 		     
-		  <input name="campoPesquisar" placeholder="Digite aqui" type="text" class="form-control" id="campoPesquisar" >
+		  <input name="campoPesquisar" th:value="${campoPesquisar}" placeholder="Digite aqui" type="text" class="form-control" id="campoPesquisar" >
 			 
 	  </div>
 	  
@@ -141,7 +141,7 @@
 		  	<!-- anterior -->
 		  	<span th:if="${listaUsuario.hasPrevious()}">
 			    <li class="page-item">
-			      <a th:href="@{/usuariopaginacao(page=${listaUsuario.number-1}, size=${listaUsuario.size})}" class="page-link" href="#" aria-label="Previous">
+			      <a th:href="@{/usuariopaginacao(page=${listaUsuario.number-1}, size=${listaUsuario.size}, campopesquisar=${campoPesquisar})}" class="page-link" href="#" aria-label="Previous">
 			        <span aria-hidden="true">&laquo;</span>
 			      </a>
 			    </li>
@@ -150,14 +150,14 @@
 		    
 		    <!-- numeros (ex:1,2,3) -->
 		    <th:block th:each=" i : ${#numbers.sequence(0, listaUsuario.totalPages - 1)}">
-			    <li class="page-item"><a th:href="@{/usuariopaginacao(page=${i}, size=${listaUsuario.size})}" class="page-link">[[ ${i} + 1 ]]</a></li>
+			    <li class="page-item"><a th:href="@{/usuariopaginacao(page=${i}, size=${listaUsuario.size}, campopesquisar=${campoPesquisar})}" class="page-link">[[ ${i} + 1 ]]</a></li>
 			</th:block> 
 		    
 		    
 		    <!-- proximo -->
 		    <span th:if="${listaUsuario.hasNext()}">
 			    <li class="page-item">
-			      <a th:href="@{/usuariopaginacao(page=${listaUsuario.number+1}, size=${listaUsuario.size})}" class="page-link" href="#" aria-label="Next">
+			      <a th:href="@{/usuariopaginacao(page=${listaUsuario.number+1}, size=${listaUsuario.size}, campopesquisar=${campoPesquisar})}" class="page-link" href="#" aria-label="Next">
 			        <span aria-hidden="true">&raquo;</span>
 			      </a>
 			    </li>

@@ -187,12 +187,12 @@ public class UsuarioController {
 	
 	// PAGINACAO USUARIO
 	@GetMapping(value = "/usuariopaginacao")
-	public ModelAndView listaUsuarioPaginacao(@PageableDefault(size = 5) Pageable pageable){
+	public ModelAndView listaUsuarioPaginacao(@PageableDefault(size = 5) Pageable pageable, @RequestParam("campopesquisar") String campoPesquisar){
 		
 		ModelAndView mv = new ModelAndView("cadastro/cadastrousuario");
 		
-		// listar usuarios paginado
-		mv.addObject("listaUsuario", usuarioRepository.findAll(pageable));
+		// listar usuarios pesquisados
+		mv.addObject("listaUsuario", usuarioRepository.pesquisarByNome(campoPesquisar,pageable));
 				
 		// lista profissao
 		mv.addObject("listaProfissao", profissaoRepository.findAll());
@@ -200,10 +200,35 @@ public class UsuarioController {
 		// usuario edicao
 		mv.addObject("usuarioeditar", new Usuario());
 		
+		// campo pesquisar
+		mv.addObject("campoPesquisar", campoPesquisar);
+		
 		return mv;
 	}
 	
 	
+	
+	// PESQUISAR USUARIO POR NOME
+	@PostMapping( value = "/pesquisarusuario")
+	public ModelAndView pesquisarUsuarioByName(@RequestParam(value = "campoPesquisar") String campoPesquisar,
+			@PageableDefault(size = 5, sort = {"nome"}) Pageable pageable){
+		
+		ModelAndView mv = new ModelAndView("cadastro/cadastrousuario");
+		
+		// listar usuarios pesquisados
+		mv.addObject("listaUsuario", usuarioRepository.pesquisarByNome(campoPesquisar,pageable));
+		
+		// lista profissao
+		mv.addObject("listaProfissao", profissaoRepository.findAll());
+		
+		// usuario edicao
+		mv.addObject("usuarioeditar", new Usuario());
+		
+		// campo pesquisar
+		mv.addObject("campoPesquisar", campoPesquisar);
+		
+		return mv;
+	}
 	
 	// DOWNLOAD FOTO
 	@GetMapping(value = "/downloadfoto/{idusuario}")
@@ -231,26 +256,7 @@ public class UsuarioController {
 		
 		
 	}
-	
-	
-	
-	// PESQUISAR USUARIO POR NOME
-	@PostMapping( value = "/pesquisarusuario")
-	public ModelAndView pesquisarUsuarioByName(@RequestParam(value = "campoPesquisar") String campoPesquisar){
 		
-		ModelAndView mv = new ModelAndView("cadastro/cadastrousuario");
-		
-		// listar usuarios pesquisados
-		mv.addObject("listaUsuario", usuarioRepository.pesquisarByNome(campoPesquisar));
-		
-		// lista profissao
-		mv.addObject("listaProfissao", profissaoRepository.findAll());
-		
-		// usuario edicao
-		mv.addObject("usuarioeditar", new Usuario());
-		
-		return mv;
-	}
 	
 	// LISTA TELEFONES
 	@GetMapping(value = "/telefones/{idusuario}")
